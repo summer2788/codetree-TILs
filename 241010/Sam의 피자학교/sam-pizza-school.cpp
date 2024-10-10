@@ -92,13 +92,13 @@ int Kfind(int n, vector<int> &arr)
             int d = std::abs(a - b) / 5;
             if (a > b)
             {
-                dow2[i][j] = (dow[i][j] - d);
-                dow2[i][j + 1] = (dow[i][j + 1] + d);
+                dow2[i][j]  -= d;
+                dow2[i][j + 1]  += d;
             }
             else
             {
-                dow2[i][j] = (dow[i][j] + d);
-                dow2[i][j + 1] = (dow[i][j + 1] - d);
+                dow2[i][j] += d;
+                dow2[i][j + 1] -= d;
             }
         }
     }
@@ -111,13 +111,13 @@ int Kfind(int n, vector<int> &arr)
         int d = std::abs(a - b) / 5;
         if (a > b)
         {
-            dow2[n - 1][i] = (dow[n - 1][i] - d);
-            dow2[n - 1][i + 1] = (dow[n - 1][i + 1] + d);
+            dow2[n - 1][i] -= d;
+            dow2[n - 1][i + 1] += d;
         }
         else
         {
-            dow2[n - 1][i] = (dow[n - 1][i] + d);
-            dow2[n - 1][i + 1] = (dow[n - 1][i + 1] - d);
+            dow2[n - 1][i] += d;
+            dow2[n - 1][i + 1]-=  d;
         }
     }
     // border process
