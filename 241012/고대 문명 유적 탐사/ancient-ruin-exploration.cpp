@@ -18,7 +18,8 @@ constexpr std::array<pair<int, int>, 9> arr180{{{1, 1}, {1, 0}, {1, -1}, {0, 1},
 constexpr std::array<pair<int, int>, 9> arr270{{{1, -1}, {0, -1}, {-1, -1}, {1, 0}, {0, 0}, {-1, 0}, {1, 1}, {0, 1}, {-1, 1}}};
 
 int dx[] = {-1, 0, 1, 0}; // up, right, down, left
-int dy[] = {0, 1, 0, -1};
+int dy[] = {0, 1, 0, -1}; 
+int wallIdx = 0;
 
 void resetVisited()
 {
@@ -140,7 +141,7 @@ fourT explore(vector<vector<int>>& mainRuin)
 
 //  fill from the wall function
 // return the next wall start idx
-int fillRuin(int start)
+int fillRuin(int start, vector<vector<int>>& ruin)
 {
     int startIdx = start;
     for (int j = 1; j <= MaxN; j++)
@@ -157,7 +158,7 @@ int fillRuin(int start)
     return startIdx;
 }
 
-int eraseJewerly()
+int eraseJewerly(vector<vector<int>>& ruin)
 {
     int sum = 0;
     for (int i = 1; i < MaxN + 1; i++)
@@ -182,23 +183,22 @@ int eraseJewerly()
     return sum;
 }
 
-int successive()
+int successive(vector<vector<int>>& ruin)
 {
     int result = 0;
 
     // first erase the jewerly from the first exploration
-    eraseJewerly();
+    eraseJewerly(ruin);
 
-    int wallIdx = 0;
 
     // fill the ruin from the wall
-    wallIdx = fillRuin(wallIdx);
+    wallIdx = fillRuin(wallIdx, ruin);
 
     // again search the jewerly , if so delete and fill again
     while (true)
     {
-        int sum = eraseJewerly();
-        wallIdx = fillRuin(wallIdx);
+        int sum = eraseJewerly(ruin);
+        wallIdx = fillRuin(wallIdx, ruin);
 
         if (sum == 0)
             break;
@@ -249,7 +249,7 @@ int main()
 
         result += value;
         rotateAngle(ruin, r, c, angle, mainRuin);
-        result += successive();
+        result += successive(ruin);
 
         std::cout << result << ' ';
     }
